@@ -1,7 +1,7 @@
 # NL-SQL-Template-Generation
 This repository contains the data generation pipeline for our end-to-end NL-to-SQL translation system DBPal.
 
-## Credit/Citation
+## Reference
 
 If you use this work in any way for academic/scientific purpose, please cite our SIGMOD 2020 paper:
 
@@ -14,3 +14,21 @@ If you use this work in any way for academic/scientific purpose, please cite our
   year={2020}
 }
 ```
+
+## Publications
+
+DBPal: A Fully Pluggable NL2SQL Training Pipeline
+N Weir, P Utama, A Galakatos, A Crotty, A Ilkhechi, S Ramaswamy, ...
+Proceedings of the 2020 ACM SIGMOD International Conference on Management of …
+
+DBPal: Weak Supervision for Learning a Natural Language Interface to Databases
+N Weir, A Crotty, A Galakatos, A Ilkhechi, S Ramaswamy, R Bhushan, ...
+arXiv preprint arXiv:1909.06182
+
+Dbpal: A learned nl-interface for databases
+F Basik, B Hättasch, A Ilkhechi, A Usta, S Ramaswamy, P Utama, N Weir, ...
+Proceedings of the 2018 International Conference on Management of Data, 1765 …
+
+An end-to-end neural natural language interface for databases
+P Utama, N Weir, F Basik, C Binnig, U Çetintemel, B Hättasch, A Ilkhechi, ...
+arXiv preprint arXiv:1804.00401
