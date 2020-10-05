@@ -15,6 +15,10 @@ If you use this work in any way for academic/scientific purpose, please cite our
 }
 ```
 
+## Repository
+
+This repository is separated into a source code directory and a documentation directory. For setup instructions etc. please refer to the documentation.
+
 ## Publications
 
 DBPal: A Fully Pluggable NL2SQL Training Pipeline
