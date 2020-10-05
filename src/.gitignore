@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+env/
+venv/
+
+# Data directory
+data/*
+!data/compsupadj.pickle
+!data/slot_filling_dict.txt
+!data/templates.txt
+
+# IDE
+.idea
+
+# logs
+logs/
+*.log
+
+# directory for files from spider repo
+spider/parse_raw_json.py
+spider/process_sql.py

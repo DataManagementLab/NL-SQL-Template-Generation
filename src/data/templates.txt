@@ -1,0 +1,176 @@
+# templates:
+
+which {ENT1} has the {countMax} {ENT2}	SELECT * FROM {ENT1} where COUNT_COND({ENT2} $ {ENT1} $ )
+which {ENT1} has the {countMax} {ENT2} {whereToken} {ENT2}.{COL1} {COMP1} {ENT2}.{COL1}.{LITERAL0}	SELECT * FROM {ENT1} where COUNT_COND({ENT2} $ {ENT1} $ {ENT2}.{COL1} {COMP1} {ENT2}.{COL1}.{LITERAL0} )
+which {ENT1} has the {countMax} {ENT2} {whereToken} {ENT2}.{COL1} {COMP1} {ENT2}.{COL1}.{LITERAL0} {andOrToken} {ENT2}.{COL2} {COMP2} {ENT2}.{COL2}.{LITERAL1}	SELECT * FROM {ENT1} where COUNT_COND({ENT2} $ {ENT1} $ {ENT2}.{COL1} {COMP1} {ENT2}.{COL1}.{LITERAL0} {andOrToken} {ENT2}.{COL2} {COMP2} {ENT2}.{COL2}.{LITERAL1} )
+
+{countQuestionToken} {ENT2} are there {inToken} the {ENT1} {havingToken} the {countMax} {ENT3}	SELECT count(*) from {ENT2} where JOIN_COL ( {ENT2} $ {ENT1} ) = (SELECT JOIN_COL ( {ENT1} $ {ENT2} ) from {ENT1} WHERE COUNT_COND({ENT3} $ {ENT1} $  ) limit 1 )
+{countQuestionToken} {ENT2} are there {inToken} the {ENT1} {havingToken} the {countMax} {ENT3} {whereToken} {ENT3}.{COL1} {COMP1} {ENT3}.{COL1}.{LITERAL0}	SELECT count(*) from {ENT2} where JOIN_COL ( {ENT2} $ {ENT1} ) = (SELECT JOIN_COL ( {ENT1} $ {ENT2} ) from {ENT1} WHERE COUNT_COND({ENT3} $ {ENT1} $ {ENT3}.{COL1} {COMP1} {ENT3}.{COL1}.{LITERAL0} ) limit 1 )
+
+{commandOrQuestionToken} the {ARG1} {ENT1}.{COL1f} {ENT1} in the {ENT2} {havingToken} the most {ENT3}	select * from {ENT1} where argmax({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL({ENT1} $ {ENT2}) = (SELECT JOIN_COL({ENT2} $ {ENT1}) FROM {ENT2} where COUNT_COND({ENT3} $ {ENT1} $ ) limit 1))
+{commandOrQuestionToken} the {ARG1} {ENT1}.{COL1f} {ENT1} in the {ENT2} {havingToken} the most {ENT3} {whereToken} {ENT3}.{COL2} {COMP2} {ENT3}.{COL2}.{LITERAL0}	select * from {ENT1} where argmax({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL({ENT1} $ {ENT2}) = (SELECT JOIN_COL({ENT2} $ {ENT1}) FROM {ENT2} where COUNT_COND({ENT3} $ {ENT2} $ {ENT3}.{COL2} {COMP2} {ENT3}.{COL2}.{LITERAL0}) limit 1))
+{commandOrQuestionToken} the {ENT1}.{COL2} {fromToken} the {ARG1} {ENT1}.{COL1f} {ENT1} in the {ENT2} {havingToken} the most {ENT3}	select {ENT1}.{COL2} from {ENT1} where argmax({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL({ENT1} $ {ENT2}) = (SELECT JOIN_COL({ENT2} $ {ENT1}) FROM {ENT2} where COUNT_COND({ENT3} $ {ENT1} $ ) limit 1))
+
+{countQuestionToken} {ENT1} do not have {ENT2}	{countQuestionToken} {ENT1} do not have {existenceToken} {ENT2}	select count(*) from {ENT1} where JOIN_COL ( {ENT1} $ {ENT2} ) NOT IN (SELECT JOIN_COL ( {ENT2} $ {ENT1} ) from {ENT2})
+
+{commandToken} the {ARG1} {ENT1}.{COL1f} {ENT1} {inToken} the {ARG2} {ENT2}.{COL2f} {ENT2}	{commandToken} the {ARG1} {ENT1}.{COL1f} {ENT1} {inToken} the {ENT2} {havingToken} the {ARG2} {ENT2}.{COL2f}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL ( {ENT1} $ {ENT2} ) = (SELECT JOIN_COL ({ENT2} $ {ENT1} ) FROM {ENT2} WHERE {ARG2} ({ENT2}.{COL2f} $ {ENT2} $ ) limit 1))
+{commandToken} the {ARG1} {ENT1}.{COL1f} {ENT1} {inToken} the {ENT2} {havingToken} the {ARG2} {ENT2}.{COL2f} 	{commandToken} the {ARG1} {ENT1}.{COL1f} {ENT1} {inToken} the {ENT2} {havingToken} the {ARG2} {ENT2}.{COL2f}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL ( {ENT1} $ {ENT2} ) = (SELECT JOIN_COL ({ENT2} $ {ENT1} ) FROM {ENT2} WHERE {ARG2} ({ENT2}.{COL2f} $ {ENT2} $ ) limit 1))
+
+{commandToken} the {ENT1}.{COL3} {fromToken} the {ARG1} {ENT1}.{COL1f} {ENT1} in the {ARG2} {ENT2}.{COL2f} {ENT2}	{commandToken} the {ENT1}.{COL3} {fromToken} the {ARG1} {ENT1}.{COL1f} {ENT1} in the {ENT2} with the {ARG2} {ENT2}.{COL2f}	{commandToken} the {ENT1}.{COL3} {fromToken} the {ARG1} {ENT1}.{COL1f} {ENT1} {inToken} the {ENT2} {havingToken} the {ARG2} {ENT2}.{COL2f}	SELECT {ENT1}.{COL3} FROM {ENT1} WHERE {ARG1} ({ENT1}.{COL1f} $ {ENT1} $ JOIN_COL ( {ENT1} $ {ENT2} ) = (SELECT JOIN_COL ({ENT2} $ {ENT1} ) FROM {ENT2} WHERE {ARG2} ({ENT2}.{COL2f} $ {ENT2} $ ) limit 1))
+
+### semantic specific
+#{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {isToken} in SQL0 	SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} in (SQL0)
+
+{commandOrQuestionToken} the {ENT1}.{COL3} {fromToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} {ENT1}.{FROM} 	SELECT {ENT1}.{COL3} FROM {ENT1}.{FROM} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}
+{commandOrQuestionToken} the {ENT1}.{COL3} {fromToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} {ENT1}.{FROM} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL1}	SELECT {ENT1}.{COL3} FROM {ENT1}.{FROM} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} AND {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL1}
+
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {isToken} in the {ENTa}.{COL1}.{MATCHFILL1} {fromToken} {MATCHFILLTABLE1}	SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} in (SELECT {ENTa}.{COL1}.{MATCHFILL1} FROM {MATCHFILLTABLE1})
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {isToken} in the {ENTa}.{COL1}.{MATCHFILL1} {fromToken} {MATCHFILLTABLE1} {whereToken} {MATCHFILLTABLE1}.{COL2} {COMP2} {MATCHFILLTABLE1}.{COL2}.{LITERAL0}	SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} in (SELECT {ENTa}.{COL1}.{MATCHFILL1} FROM {MATCHFILLTABLE1} WHERE {MATCHFILLTABLE1}.{COL2} {COMP2} {MATCHFILLTABLE1}.{COL2}.{LITERAL0})
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {isToken} in the {ENTa}.{COL1}.{MATCHFILL1} {fromToken} the {MATCHFILLTABLE1} with the {ARG1} {MATCHFILLTABLE1}.{COLf}	SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} in (SELECT {ENTa}.{COL1}.{MATCHFILL1} FROM {MATCHFILLTABLE1} WHERE {ARG1} ({MATCHFILLTABLE1}.{COLf} $ {MATCHFILLTABLE1} $))
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {isToken} not in the {ENTa}.{COL1}.{MATCHFILL1} {fromToken} {MATCHFILLTABLE1}	SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} not in (SELECT {ENTa}.{COL1}.{MATCHFILL1} FROM {MATCHFILLTABLE1})
+
+how {ADJ} {isToken} {ENT1} {ENT1}.{COLf}	SELECT {ENT1}.{COLf} FROM {ENT1}
+how {ADJ} {isToken} {ENT1} {ENT1}.{COLf} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}	SELECT {ENT1}.{COLf} FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+how {ADJ} {isToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {ENT1} {ENT1}.{COLf} 	SELECT {ENT1}.{COLf} FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+how {ADJ} {isToken} {ENT1} {ENT1}.{COLf} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}	SELECT {ENT1}.{COLf} FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+how {ADJ} {isToken} the {ENT1}.{COLf} {fromToken} {ENT1}.{FROM}	SELECT {ENT1}.{COLf} FROM {ENT1}.{FROM}
+how {ADJ} {isToken} the {ENT1}.{COLf} {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}	SELECT {ENT1}.{COLf} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+how {ADJ} {isToken} the {ENT1}.{COLf} {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}	SELECT {ENT1}.{COLf} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+{whatToken} {ENT1} {haveToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}  	SELECT * FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{whatToken} {ENT1} {haveToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL0}  	SELECT * FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL0}
+
+### Argmax specific
+{whatToken} {isToken} the {ARG1} {ENT1}.{COLf} {ENT1}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $)
+{whatToken} {isToken} the {ARG1} {ENT1}.{COLf} {ENT1} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $ {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0})
+{whatToken} {isToken} the {ARG1} {ENT1}.{COLf} {ENT1} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $ {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1})
+
+{whatToken} {ENT1} {haveToken} the {ARG1} {ENT1}.{COLf}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $)
+{whatToken} {ENT1} {haveToken} the {ARG1} {ENT1}.{COLf} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $ {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0})
+{whatToken} {ENT1} {haveToken} the {ARG1} {ENT1}.{COLf} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1}	SELECT * FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $ {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1})
+
+{commandOrQuestionToken} the {ENT1}.{COL1} {fromToken} the {ARG1} {ENT1}.{COLf} {ENT1} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} and {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1}	SELECT {ENT1}.{COL1} FROM {ENT1} WHERE {ARG1} ({ENT1}.{COLf} $ {ENT1} $ {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} AND {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1})
+
+### Mixed Specific
+{fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1} the {ENTc}.{COL3} are what and the {ENTd}.{COL4} are what	SELECT {ENTc}.{COL3}, {ENTd}.{COL4} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+{fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} the {ENTb}.{COL3} {isToken} what and the {ENTc}.{COL4} {isToken} what	SELECT {ENTb}.{COL3}, {ENTc}.{COL4} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+
+### Morpho specific
+where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}, {countCommand} the {ENT1} {groupByToken} {ENTb}.{COL2}	SELECT {ENTb}.{COL2} , count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} GROUP BY {ENTb}.{COL2}
+
+where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}, {countCommand} the {ENT1} {groupByToken} {ENT1}.{COL2}	SELECT {ENT1}.{COL2} , count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1} GROUP BY {ENT1}.{COL2}
+
+where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {COMP2} {ENTa}.{COL1}.{LITERAL1}, {countCommand} the {ENT1}	SELECT count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTa}.{COL1} {COMP2} {ENTa}.{COL1}.{LITERAL1}
+
+where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {COMP2} {ENTa}.{COL1}.{LITERAL1}, {countCommand} the {ENT1} {groupByToken} {ENT1}.{COL2}	SELECT {ENT1}.{COL2} , count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTa}.{COL1} {COMP2} {ENTa}.{COL1}.{LITERAL1} GROUP BY {ENT1}.{COL2}
+
+{questionToken} the result of {funcParticiple} {ENT1}.{COLf} {fromToken} {ENT1}	SELECT {funcParticiple} ({ENT1}.{COLf}) FROM {ENT1}
+{questionToken} the result of {funcParticiple} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} 	SELECT {funcParticiple} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{questionToken} the result of {funcParticiple} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1} 	SELECT {funcParticiple} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+
+{funcCommand} the {ENT1}.{COLf} {fromToken} {ENT1}	SELECT {funcCommand}  ({ENT1}.{COLf}) FROM {ENT1}
+{funcCommand} the {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}	SELECT {funcCommand}  ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{funcCommand} the {ENT1}.{COLf} {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}  {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}	SELECT {funcCommand}  ({ENT1}.{COLf}) FROM {ENT1}.{FROM} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}  {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+
+{countCommand} the {ENT1}	SELECT count(*) FROM {ENT1}
+{countCommand} the {ENT1} where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}	SELECT count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+{countCommand} the {ENT1} where {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}	SELECT count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+### Naive specific
+
+# SELECT *
+{commandOrQuestionToken} the {ENT1}.{FROM} 	 SELECT * FROM {ENT1}.{FROM}
+{commandOrQuestionToken} all of the {ENT1}.{FROM} 	 SELECT * FROM {ENT1}.{FROM}
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} 	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+{commandOrQuestionToken} the {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {ENT1}.{FROM}  	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+{commandOrQuestionToken} all of the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} 	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0}
+{commandOrQuestionToken} the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+{commandOrQuestionToken} all of the {ENT1}.{FROM} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+{commandOrQuestionToken} the {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1} {ENT1}.{FROM} 	 SELECT * FROM {ENT1}.{FROM} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+# single SELECT
+{commandOrQuestionToken} the {ENT1}.{COL1} {fromToken} {ENT1}.{FROM} 	 SELECT {ENT1}.{COL1} FROM {ENT1}.{FROM}
+{commandOrQuestionToken} the {ENT1}.{COL1} {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} 	 SELECT {ENT1}.{COL1} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{commandOrQuestionToken} the {ENT1}.{COL1} {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1} 	 SELECT {ENT1}.{COL1} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+
+# double SELECT
+{commandOrQuestionToken} the {ENTa}.{COL1} and {ENTb}.{COL2} {fromToken} {ENT1}.{FROM} 	 {commandOrQuestionToken} all of the {ENTa}.{COL1} and all of the {ENTb}.{COL2} {fromToken} {ENT1}.{FROM} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} FROM {ENT1}.{FROM}
+{commandOrQuestionToken} the {ENTa}.{COL1} {fromToken} {ENTa} and also the {ENTb}.{COL2} {fromToken} {ENTb} {whereToken} {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} FROM {ENT1} WHERE {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0}
+{commandOrQuestionToken} the {ENTa}.{COL1} and {ENTb}.{COL2} {fromToken} {ENT1}.{FROM} {whereToken} {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0} {andOrToken} {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL1} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} FROM {ENT1}.{FROM} WHERE {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0} {andOrToken} {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL1}
+
+{commandOrQuestionToken} the {ENTa}.{COL1} and the {ENTb}.{COL2} {fromToken} {ENT1}.{FROM} where either the {ENTc} {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0} or the {ENTd} {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL1} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} FROM {ENT1}.{FROM} WHERE {ENTc}.{COL3} {COMP3} {ENTc}.{COL3}.{LITERAL0} OR {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL1}
+
+# triple select
+{commandOrQuestionToken} the {ENTa}.{COL1} , {ENTb}.{COL2} and {ENTc}.{COL3} {fromToken} {ENT1}.{FROM} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} , {ENTc}.{COL3} FROM {ENT1}.{FROM}
+{commandOrQuestionToken} the {ENTa}.{COL1} , {ENTb}.{COL2} and {ENTc}.{COL3} {fromToken} {ENT1}.{FROM} {whereToken} {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL0} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} , {ENTc}.{COL3} FROM {ENT1}.{FROM} WHERE {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL0}
+{commandOrQuestionToken} the {ENTa}.{COL1} , {ENTb}.{COL2} and {ENTc}.{COL3} {fromToken} {ENT1}.{FROM} {whereToken} {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL0} {andOrToken} {ENTe}.{COL5} {COMP5} {ENTe}.{COL5}.{LITERAL1} 	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} , {ENTc}.{COL3} FROM {ENT1}.{FROM} WHERE {ENTd}.{COL4} {COMP4} {ENTd}.{COL4}.{LITERAL0} {andOrToken} {ENTe}.{COL5} {COMP5} {ENTe}.{COL5}.{LITERAL1}
+
+# functions
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1}  	 SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1}
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}  	 SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}  	 SELECT {FUNC1} ( {ENT1}.{COLf} ) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {ENT1} {whereToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}  	 SELECT {FUNC1} ( {ENT1}.{COLf} ) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} AND {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2f} is neither more nor less than {ENTa}.{COL2f}.{LITERAL0} 	 SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2f} = {ENTa}.{COL2f}.{LITERAL0}
+{commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2f} {COMP2} {ENTa}.{COL2f}.{LITERAL0} {andOrToken} {COMP3} {ENTa}.{COL2f}.{LITERAL1}  	 SELECT {FUNC1} ( {ENT1}.{COLf} ) FROM {ENT1} WHERE {ENTa}.{COL2f} {COMP2} {ENTa}.{COL2f}.{LITERAL0} {andOrToken} {ENTa}.{COL2f} {COMP3} {ENTa}.{COL2f}.{LITERAL1}
+what are the {ENTa}.{COL3} and {ENTb}.{COL2} {fromToken} {ENT1} {whereToken} {ENTc}.{COL1f} is at least {ENTc}.{COL1f}.{LITERAL0} {andOrToken} no more than {ENTc}.{COL1f}.{LITERAL1}  	 SELECT {ENTa}.{COL3} , {ENTb}.{COL2} FROM {ENT1} WHERE {ENTc}.{COL1f} >= {ENTc}.{COL1f}.{LITERAL0} {andOrToken} {ENTc}.{COL1f} <= {ENTc}.{COL1f}.{LITERAL1}
+
+# counts
+{commandOrQuestionToken} the {functionToken.countToken} {fromToken} {ENT1} 	 SELECT count(*) FROM {ENT1}
+{commandOrQuestionToken} the {functionToken.countToken} {fromToken} {ENT1} {whereToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} 	 SELECT count(*) FROM {ENT1} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}
+{commandOrQuestionToken} the {functionToken.countToken} {fromToken} {ENT1} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1} 	 SELECT count(*) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+
+{countQuestionToken} {ENT1} are there  	 SELECT count(*) FROM {ENT1}
+{countQuestionToken} {ENT1} do we have  	 SELECT count(*) FROM {ENT1}
+{countQuestionToken} {ENT1} are there {whereToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}  	 SELECT count(*) FROM {ENT1} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}
+{countQuestionToken} {ENT1} do we have {whereToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}  	 SELECT count(*) FROM {ENT1} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}
+
+# distincts
+{commandOrQuestionToken} the distinct {ENT1}.{COL1} {fromToken} {ENT1} 	 SELECT DISTINCT {ENT1}.{COL1} FROM {ENT1}
+{commandOrQuestionToken} the distinct {ENT1}.{COL1} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} 	 SELECT DISTINCT {ENT1}.{COL1} FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{commandOrQuestionToken} the distinct {ENT1}.{COL1} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}	 SELECT DISTINCT {ENT1}.{COL1} FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {andOrToken} {ENTb}.{COL3} {COMP3} {ENTb}.{COL3}.{LITERAL1}
+
+# groupbys
+{groupByToken} {ENT1}.{COL1} {groupWord} , {commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} 	{groupByToken} {ENT1}.{COL1} {groupWord} , what {logicToken.equalToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1}  	 SELECT {ENT1}.{COL1} , {FUNC1} ( {ENT1}.{COLf} ) FROM {ENT1} GROUP BY {ENT1}.{COL1}
+
+### syntactic specific
+# single select
+what are all {ENT1}.{FROM} {ENT1}.{COL1} 	{fromToken} {ENT1}.{FROM} , what {isToken} the {ENT1}.{COL1} 	 SELECT {ENT1}.{COL1} FROM {ENT1}.{FROM}
+{fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} , {commandOrQuestionToken} the {ENT1}.{COL1}  	 SELECT {ENT1}.{COL1} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+
+# double select
+{commandToken} {ENT1} {ENT1}.{COL1} and {ENT1}.{COL2} 	{fromToken} {ENT1} the {ENT1}.{COL1} and {ENT1}.{COL2} are what 	{fromToken} {ENT1} , {commandToken} {ENT1}.{COL1} and {ENT1}.{COL2} 	the {ENT1}.{COL1} and {ENT1}.{COL2} of {ENT1} are what 	SELECT {ENT1}.{COL1} , {ENT1}.{COL2} FROM {ENT1}
+where {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0} , what are {ENT1} {ENT1}.{COL1} and {ENT1}.{COL2} 	of {ENT1} {whereToken} {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0} , the {ENT1}.{COL1} and {ENT1}.{COL2} are what 	SELECT {ENT1}.{COL1} , {ENT1}.{COL2} FROM {ENT1} WHERE {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0}
+{fromToken} {ENT1}.{FROM} where {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0} {andOrToken} {ENTb}.{COL4} {COMP4} {ENTb}.{COL4}.{LITERAL1} , the {ENTc}.{COL1} and {ENTd}.{COL2} are what  	 {fromToken} {ENT1}.{FROM} {whereToken} {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0} {andOrToken} {ENTb}.{COL4} {COMP4} {ENTb}.{COL4}.{LITERAL1} , {commandToken} {ENTc}.{COL1} and {ENTd}.{COL2} 	 SELECT {ENTc}.{COL1} , {ENTd}.{COL2} FROM {ENT1}.{FROM} WHERE {ENTa}.{COL3} {COMP3} {ENTa}.{COL3}.{LITERAL0} {andOrToken} {ENTb}.{COL4} {COMP4} {ENTb}.{COL4}.{LITERAL1}
+
+# triple select
+{fromToken} {ENT1}.{FROM} , {commandToken} {ENTa}.{COL1} , {ENTb}.{COL2} and {ENTc}.{COL3} 	what are {ENT1}.{FROM} {ENTa}.{COL1} , {ENTb}.{COL2} and {ENTc}.{COL3}  	 SELECT {ENTa}.{COL1} , {ENTb}.{COL2} , {ENTc}.{COL3} FROM {ENT1}.{FROM}
+
+# functions
+{questionToken} the {ENT1} {FUNC1} {ENT1}.{COLf}  	the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {logicToken.equalToken} what 	{fromToken} {ENT1} , the {FUNC1} {ENT1}.{COLf} {logicToken.equalToken} what 	{fromToken} {ENT1} {commandToken} their {FUNC1} {ENT1}.{COLf} 	{fromToken} {ENT1} , {questionToken} the {FUNC1} {ENT1}.{COLf}  	 the {ENT1} {FUNC1} {ENT1}.{COLf} {logicToken.equalToken} what 	SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1}
+{commandToken} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} the {FUNC1} {ENT1}.{COLf}	{fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} , {questionToken} the {FUNC1} {ENT1}.{COLf} 	the {FUNC1} {ENT1}.{COLf} of {ENT1} where {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {logicToken.equalToken} what  	 where {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} , {questionToken} the {FUNC1} {ENT1}.{COLf} of {ENT1} 	SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0}
+{fromToken} {ENT1} where {ENTa}.{COL2}.{LITERAL0} is the {ENTa}.{COL2} , {questionToken} the {FUNC1} {ENT1}.{COLf} 	SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} = {ENTa}.{COL2}.{LITERAL0}
+{fromToken} {ENT1} {whereToken} {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1} , {questionToken} the {FUNC1} {ENT1}.{COLf} 	SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL1} {COMP1} {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+the {FUNC1} {ENT1} {ENT1}.{COLf} {logicToken.equalToken} what where {ENTa}.{COL1}.{LITERAL0} is the {ENTa}.{COL1} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}  	 SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL1} = {ENTa}.{COL1}.{LITERAL0} {andOrToken} {ENTb}.{COL2} {COMP2} {ENTb}.{COL2}.{LITERAL1}
+{fromToken} {ENT1} {whereToken} {ENT1}.{COL2}.{LITERAL0} is the {ENT1}.{COL2} , the {FUNC1} {ENT1}.{COLf} {logicToken.equalToken} what 	SELECT {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENT1}.{COL2} = {ENT1}.{COL2}.{LITERAL0}
+
+# counts
+the {functionToken.countToken} {fromToken} {ENT1} {logicToken.equalToken} what  	 SELECT count(*) FROM {ENT1}
+{fromToken} {ENT1} {whereToken} {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} , {questionToken} the {functionToken.countToken}  	 SELECT count(*) FROM {ENT1} WHERE {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0}
+{questionToken} the {functionToken.countToken} of {ENT1} where {ENT1}.{COL2}.{LITERAL0} {logicToken.equalToken} the {ENT1}.{COL2} {andOrToken} {ENT1}.{COL3}.{LITERAL1} or greater {isToken} the {ENT1}.{COL3}  	 SELECT count(*) FROM {ENT1} WHERE {ENT1}.{COL2} = {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} >= {ENT1}.{COL3}.{LITERAL1}
+
+# distincts
+the distinct {ENT1}.{COL1} values {fromToken} {ENT1} are what  	 SELECT DISTINCT {ENT1}.{COL1} FROM {ENT1}
+
+#group bys
+the {FUNC1} {ENT1}.{COLf} for {ENT1} {logicToken.equalToken} what for each {ENTa}.{COL4}  	 {commandOrQuestionToken} the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} for each {ENTa}.{COL4} 	 {questionToken} the {ENT1} {FUNC1} {ENT1}.{COLf} for each {ENTa}.{COL4} 	 {questionToken} the {FUNC1} {ENT1} {ENT1}.{COLf} for each {ENTa}.{COL4}  	 SELECT {ENTa}.{COL4} , {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} GROUP BY {ENTa}.{COL4}
+{fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} , {questionToken} the {FUNC1} of {ENT1}.{COLf} for each {ENTb}.{COL4}  	 {questionToken} the {FUNC1} {ENT1}.{COLf} of {ENT1} where {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} for each {ENTb}.{COL4}  	the {FUNC1} {ENT1}.{COLf} {fromToken} {ENT1} {whereToken} {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} {logicToken.equalToken} what for each {ENTb}.{COL4}  	 SELECT {ENTb}.{COL4} , {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENTa}.{COL2} {COMP2} {ENTa}.{COL2}.{LITERAL0} GROUP BY {ENTb}.{COL4}
+{questionToken} the {FUNC1} {ENT1} {ENT1}.{COLf} where {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1} for each {ENT1}.{COL4}  	 SELECT {ENT1}.{COL4} , {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {COMP3} {ENT1}.{COL3}.{LITERAL1} GROUP BY {ENT1}.{COL4}
+
+{commandOrQuestionToken} the {functionToken.countToken} of {ENT1} for each {ENT1}.{COL4} 	 SELECT {ENT1}.{COL4} , count(*) FROM {ENT1} GROUP BY {ENT1}.{COL4}
+
+{questionToken} the {ENT1}.{COLf} {FUNC1} for each {ENT1}.{COL4} group of {ENT1} {whereToken} {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} {logicToken.equalToken} {ENT1}.{COL3}.{LITERAL1} or less  	 SELECT {ENT1}.{COL4} , {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENT1}.{COL2} {COMP2} {ENT1}.{COL2}.{LITERAL0} {andOrToken} {ENT1}.{COL3} <= {ENT1}.{COL3}.{LITERAL1} GROUP BY {ENT1}.{COL4}
+the {FUNC1} of {ENT1}.{COLf} of {ENT1} where {ENT1}.{COL2} {logicToken.notEqualToken} {ENT1}.{COL2}.{LITERAL0} or less {logicToken.equalToken} what for each {ENT1}.{COL4}  	 SELECT {ENT1}.{COL4} , {FUNC1} ({ENT1}.{COLf}) FROM {ENT1} WHERE {ENT1}.{COL2} <= {ENT1}.{COL2}.{LITERAL0} GROUP BY {ENT1}.{COL4}
+where {ENT1}.{COL1} {COMP1} {ENT1}.{COL1}.{LITERAL0} or less {andOrToken} {ENT1}.{COL2} {logicToken.equalToken} {ENT1}.{COL2}.{LITERAL1} or greater , {questionToken} the {functionToken.countToken} of {ENT1} for each {ENT1}.{COL4}  	 SELECT {ENT1}.{COL4} , count(*) FROM {ENT1} WHERE {ENT1}.{COL1} <= {ENT1}.{COL1}.{LITERAL0} {andOrToken} {ENT1}.{COL2} >= {ENT1}.{COL2}.{LITERAL1} GROUP BY {ENT1}.{COL4}
